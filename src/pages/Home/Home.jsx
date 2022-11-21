@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import logo from "../../assets/img/cysecnewlogo.png";
 import video from "../../assets/img/intro.mp4";

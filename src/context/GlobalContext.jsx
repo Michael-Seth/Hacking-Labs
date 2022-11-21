@@ -1,4 +1,3 @@
-import { async } from "@firebase/util";
 import React, { createContext, useEffect, useState } from "react";
 
 // Create Context
@@ -8,7 +7,7 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
   const [labsData, setLabsData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [editLab, setEditLab] = useState({
+  const [labEdit, setLabEdit] = useState({
     room: {},
     edit: false,
   });
@@ -45,11 +44,28 @@ export const GlobalProvider = ({ children }) => {
     setLabsData([data, ...labsData]);
   };
 
-  const labEdit = (room) => {
-    setEditLab({
+  const editLab = (room) => {
+    setLabEdit({
       room,
       edit: true,
     });
+  };
+
+  //Update_Labs but it adds a new Item
+  const updateLab = async (id, upIdLab) => {
+    const response = await fetch(`/labsdata/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(upIdLab),
+    });
+
+    const data = await response.json();
+
+    setLabsData(
+      labsData.map((room) => (room.id === id ? { ...room, ...data } : room))
+    );
   };
 
   return (
@@ -58,8 +74,10 @@ export const GlobalProvider = ({ children }) => {
         labsData,
         deleteLab,
         addLab,
-        labEdit,
+        editLab,
         isLoading,
+        labEdit,
+        updateLab,
       }}
     >
       {children}

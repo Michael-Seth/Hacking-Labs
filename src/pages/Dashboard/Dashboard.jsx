@@ -11,7 +11,7 @@ import Settings from "../../components/Settings";
 //import Machine from "../../components/Machine";
 import CreateLab from "../../admin/CreateLab";
 import CreateMaterials from "../../admin/CreateMaterials";
-import { Route, Routes } from "react-router-dom";
+//import { Route, Routes } from "react-router-dom";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("tab1");

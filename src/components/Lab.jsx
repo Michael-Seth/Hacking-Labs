@@ -1,12 +1,7 @@
-import React, { useContext } from "react";
-import { Link, useParams } from "react-router-dom";
-import GlobalContext from "../context/GlobalContext";
-import { MdDeleteForever } from "react-icons/md";
-import { FaRegEdit } from "react-icons/fa";
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Lab({ room }) {
-  const { deleteLab, labEdit } = useContext(GlobalContext);
-
   return (
     <div className="labsGrid-box">
       <h3 className="labsGrid-name">{room.name}</h3>
@@ -21,12 +16,6 @@ function Lab({ room }) {
         ))} */}
         <p>{room.tag}</p>
       </div>
-      <button onClick={() => deleteLab(room.id)}>
-        <MdDeleteForever size="20px" color="red" />
-      </button>
-      <button onClick={() => labEdit(room)}>
-        <FaRegEdit size="20px" color="yellow" />
-      </button>
     </div>
   );
 }

@@ -2,12 +2,12 @@ import { useState, useEffect, useContext } from "react";
 import { RiUploadCloudFill } from "react-icons/ri";
 import GlobalContext from "../context/GlobalContext";
 import "./Admin.css";
+import Preview from "./Preview";
 
 function CreateLab() {
   // const imageMimeType = /image\/(png|jpg|jpeg)/i;
-  const { addLab, labsData } = useContext(GlobalContext);
+  const { addLab, labsData, labEdit, updateLab } = useContext(GlobalContext);
 
-  const [btnDisabled, setBtnDisabled] = useState(false);
   const [formData, setFormData] = useState(labsData);
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
@@ -24,6 +24,20 @@ function CreateLab() {
     { id: 1, name: "Red Team" },
     { id: 2, name: "Blue Team" },
   ];
+
+  //This part help trigger the button to update it, the labEdit
+  useEffect(() => {
+    if (labEdit.edit === true) {
+      setFormData({
+        name: labEdit.room.name,
+        tag: labEdit.room.tag,
+        desc: labEdit.room.desc,
+        category: labEdit.room.category,
+        team: labEdit.room.team,
+        image: labEdit.room.image,
+      });
+    }
+  }, [labEdit]);
 
   const onChange = (e) => {
     //   For Image Review
@@ -55,6 +69,11 @@ function CreateLab() {
       image,
     };
     addLab(labsDataCopy);
+
+    //Check if the labEdit function is triggered, if yes, update the id of the document
+    if (labEdit.edit === true) {
+      updateLab(labEdit.room.id, labsDataCopy);
+    }
     setFormData({
       name: "",
       tag: "",
@@ -63,7 +82,6 @@ function CreateLab() {
       team: "",
       image: "",
     });
-    console.log(labsDataCopy);
   };
 
   useEffect(() => {
@@ -100,6 +118,7 @@ function CreateLab() {
               value={name || ""}
               onChange={onChange}
               placeholder="Enter Lab Name"
+              required
             />
           </div>
           <div className="form-box">
@@ -110,6 +129,7 @@ function CreateLab() {
               type="text"
               value={tag || ""}
               id="tag"
+              required
               onChange={onChange}
               placeholder="Separate Tags With Commas"
             />
@@ -134,6 +154,7 @@ function CreateLab() {
               onChange={onChange}
               value={category || ""}
               form="category"
+              required
             >
               <option>-- Category --</option>
               {categories.map((category) => {
@@ -153,6 +174,7 @@ function CreateLab() {
               onChange={onChange}
               value={team || ""}
               form="team"
+              required
             >
               <option>-- TEAM --</option>
               {teams.map((team) => {
@@ -191,10 +213,16 @@ function CreateLab() {
           </div>
         </div>
 
-        <button type="submit" disabled={btnDisabled} className="create">
+        <button type="submit" className="create">
           Create
         </button>
       </form>
+
+      <div className="display-labs">
+        {labsData.map((prevLab) => (
+          <Preview preview={prevLab} key={prevLab.id} id={prevLab.id} />
+        ))}
+      </div>
     </div>
   );
 }
