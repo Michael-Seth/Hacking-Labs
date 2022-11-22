@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 // Create Context
 const GlobalContext = createContext();
@@ -17,7 +18,7 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   const fetchLabs = async () => {
-    const response = await fetch(`/labsdata?_sort=id&_order=desc`);
+    const response = await fetch(`/labsMachine?_sort=id&_order=desc`);
     const data = await response.json();
     setLabsData(data);
     setIsLoading(false);
@@ -26,24 +27,34 @@ export const GlobalProvider = ({ children }) => {
   //Delete_Lab
   const deleteLab = async (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      await fetch(`/labsdata/${id}`, { method: "DELETE" });
+      await fetch(`/labsMachine/${id}`, { method: "DELETE" });
       setLabsData(labsData.filter((item) => item.id !== id));
     }
   };
 
   //Add New lab
   const addLab = async (newLab) => {
-    const response = await fetch("/labsdata", {
+    const response = await fetch("/labsMachine", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newLab),
-    });
+    })
+  try {
     const data = await response.json();
     setLabsData([data, ...labsData]);
+    toast.success("Lab Added Successfully");
+  } catch (error) {
+        toast.error(error, "Lab not created");
+  }
+    // const data = await response.json();
+    // setLabsData([data, ...labsData]);
+    // toast.success("Lab Added Successfully");
+
   };
 
+  //UPDATE Lab
   const editLab = (room) => {
     setLabEdit({
       room,
@@ -53,7 +64,7 @@ export const GlobalProvider = ({ children }) => {
 
   //Update_Labs but it adds a new Item
   const updateLab = async (id, upIdLab) => {
-    const response = await fetch(`/labsdata/${id}`, {
+    const response = await fetch(`/labsMachine/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -23,6 +23,20 @@ form {
   flex-direction: column;
   margin: 1rem 0 2rem 0;
 }
+@media only screen and (max-width: 955px) {
+  form {
+    flex-flow: column nowrap;
+    width: 100%;
+  }
+  .form1 {
+    flex-basis: 98%;
+    margin: 0 1rem;
+  }
+  .form2 {
+    flex-basis: 98%;
+    margin: 0 1rem;
+  }
+}
 .form-box-upload {
   display: flex;
   flex-direction: row;
@@ -61,6 +75,19 @@ form {
   border-radius: 7px;
   outline: none;
   background-color: transparent;
+}
+.form-box select {
+  border: 1px solid #15c3ab9c;
+  height: 3.5rem;
+  padding-left: 1rem;
+  border-radius: 7px;
+  outline: none;
+  background-color: transparent;
+}
+.form-box option {
+  padding: 1rem 0;
+  outline: none;
+  background-color: black;
 }
 .upload {
   border: 1px dashed #15c3ab9c;

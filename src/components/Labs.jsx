@@ -9,7 +9,7 @@ function Labs() {
   const { labsData, isLoading } = useContext(GlobalContext);
 
   if (!isLoading && (!labsData || labsData.length === 0)) {
-    return <h3> No Labs Available/</h3>;
+    return <h3> No Labs Available</h3>;
   }
 
   return isLoading ? (

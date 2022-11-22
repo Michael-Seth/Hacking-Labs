@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import thumbnail from "../assets/img/Mr Victor.jpg";
 import { MdDeleteForever } from "react-icons/md";
 import { FaRegEdit } from "react-icons/fa";
 import GlobalContext from "../context/GlobalContext";
@@ -26,7 +25,7 @@ function Preview({ preview }) {
         <p>Team</p>
       </div>
       <div className="lab-item">
-        <img src={thumbnail} alt="thumbnail" />
+        <img src={preview.fileDataURL} alt="thumbnail" />
         <p>Thumbnail</p>
       </div>
 

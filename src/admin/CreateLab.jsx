@@ -12,7 +12,7 @@ function CreateLab() {
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
 
-  const { name, tag, desc, category, team, image } = formData;
+  const { name, tag, desc, category, team } = formData;
 
   //For Categories
   const categories = [
@@ -66,10 +66,11 @@ function CreateLab() {
       desc,
       category,
       team,
-      image,
+      fileDataURL,
     };
+    delete labsDataCopy.image;
     addLab(labsDataCopy);
-
+    console.log(labsDataCopy);
     //Check if the labEdit function is triggered, if yes, update the id of the document
     if (labEdit.edit === true) {
       updateLab(labEdit.room.id, labsDataCopy);
@@ -80,8 +81,9 @@ function CreateLab() {
       desc: "",
       category: "",
       team: "",
-      image: "",
+      image: {},
     });
+    setFileDataURL(null);
   };
 
   useEffect(() => {
@@ -188,7 +190,10 @@ function CreateLab() {
           </div>
           <div className="form-box">
             <label htmlFor="image">
-              Thumbnail <span>minimum of 1 thumbnail</span>
+              Thumbnail{" "}
+              <small style={{ marginLeft: "2rem", color: "yellow" }}>
+                Less than 200kb
+              </small>
             </label>
             <div className="form-box-upload">
               <div className="upload">
@@ -203,12 +208,21 @@ function CreateLab() {
                   accept="image/x-png,image/jpeg"
                 />
               </div>
-              <div
-                className="preview"
-                style={{ backgroundImage: `url(${fileDataURL})` }}
-              >
-                &nbsp;
-              </div>
+              {fileDataURL ? (
+                <div
+                  className="preview"
+                  style={{ backgroundImage: `url(${fileDataURL})` }}
+                >
+                  &nbsp;
+                </div>
+              ) : (
+                <div
+                  className="preview"
+                  style={{ backgroundColor: "#ffffff21" }}
+                >
+                  &nbsp;
+                </div>
+              )}
             </div>
           </div>
         </div>
