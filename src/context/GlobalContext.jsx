@@ -18,7 +18,9 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   const fetchLabs = async () => {
-    const response = await fetch(`/labsMachine?_sort=id&_order=desc`);
+    const response = await fetch(
+      `https://637a3eb07419b414df9d0572.mockapi.io/labsMachine?_sort=id&_order=desc`
+    );
     const data = await response.json();
     setLabsData(data);
     setIsLoading(false);
@@ -27,31 +29,36 @@ export const GlobalProvider = ({ children }) => {
   //Delete_Lab
   const deleteLab = async (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
-      await fetch(`/labsMachine/${id}`, { method: "DELETE" });
+      await fetch(
+        `https://637a3eb07419b414df9d0572.mockapi.io/labsMachine/${id}`,
+        { method: "DELETE" }
+      );
       setLabsData(labsData.filter((item) => item.id !== id));
     }
   };
 
   //Add New lab
   const addLab = async (newLab) => {
-    const response = await fetch("/labsMachine", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newLab),
-    })
-  try {
-    const data = await response.json();
-    setLabsData([data, ...labsData]);
-    toast.success("Lab Added Successfully");
-  } catch (error) {
-        toast.error(error, "Lab not created");
-  }
+    const response = await fetch(
+      "https://637a3eb07419b414df9d0572.mockapi.io/labsMachine",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newLab),
+      }
+    );
+    try {
+      const data = await response.json();
+      setLabsData([data, ...labsData]);
+      toast.success("Lab Added Successfully");
+    } catch (error) {
+      toast.error(error, "Lab not created");
+    }
     // const data = await response.json();
     // setLabsData([data, ...labsData]);
     // toast.success("Lab Added Successfully");
-
   };
 
   //UPDATE Lab
@@ -64,13 +71,16 @@ export const GlobalProvider = ({ children }) => {
 
   //Update_Labs but it adds a new Item
   const updateLab = async (id, upIdLab) => {
-    const response = await fetch(`/labsMachine/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(upIdLab),
-    });
+    const response = await fetch(
+      `https://637a3eb07419b414df9d0572.mockapi.io/labsMachine/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(upIdLab),
+      }
+    );
 
     const data = await response.json();
 
