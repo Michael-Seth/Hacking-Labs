@@ -4,7 +4,7 @@
   font-size: 2rem;
   margin: 2rem 0 1rem 1rem;
 }
-form {
+.adminForm {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
@@ -16,6 +16,7 @@ form {
   padding: 1.5rem 0;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
   background-color: #15c3ab9c;
 }
 .form-box {
@@ -83,6 +84,13 @@ form {
   border-radius: 7px;
   outline: none;
   background-color: transparent;
+}
+.form-box .editor {
+  border: none;
+  height: 10rem;
+  padding-left: 1rem;
+  border-radius: 7px;
+  outline: none;
 }
 .form-box option {
   padding: 1rem 0;
@@ -174,4 +182,40 @@ form {
 }
 .prev-btn:hover {
   background-color: rgba(30, 235, 190, 0.705);
+}
+.ql-toolbar.ql-snow {
+  border: 1px solid #15c3ab9c !important;
+  border-radius: 10px 10px 0px 0;
+}
+.ql-container.ql-snow {
+  border: 1px solid #15c3ab9c !important;
+  border-radius: 0 0 10px 10px;
+}
+.ql-editor {
+  height: 12rem;
+  width: 75vw;
+  margin-bottom: 3rem;
+  border-radius: 1rem;
+}
+.mat1 {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.mat-box {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0 2rem 0;
+}
+.mat-box label {
+  font-size: 1.3rem;
+  line-height: 2.5;
+}
+.mat-box input {
+  border: 1px solid #15c3ab9c;
+  height: 3.5rem;
+  padding-left: 1rem;
+  border-radius: 7px;
+  outline: none;
+  background-color: transparent;
 }

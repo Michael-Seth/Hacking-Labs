@@ -54,7 +54,7 @@ function Register() {
         });
 
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/dashboard/home");
         }, 1000);
         const formDataCopy = { ...formData };
         // delete formDataCopy.password;

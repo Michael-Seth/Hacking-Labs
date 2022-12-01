@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import userImg from "../assets/img/young woman wearing smart watch and using laptop.png";
 import homeIcon from "../assets/img/House Graph by Streamlinehq.png";
 import labsIcon from "../assets/img/Suitcase by Streamlinehq.png";
 import pendingIcon from "../assets/img/Todo List by Streamlinehq.png";
+import GlobalContext from "../context/GlobalContext";
 
 function DashboardHome() {
+  const { user } = useContext(GlobalContext);
   return (
     <div className="active" id="dashboard" data-tab-content>
       <div className="box head">
         <div className="dashboard-head">
           <h5>Dashboard</h5>
-          <h3>Hello Michael!</h3>
+          <h3>Hello Michael</h3>
           <p>Good to see you again...</p>
         </div>
         <div className="dashboard-img">

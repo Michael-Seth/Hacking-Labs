@@ -4,18 +4,7 @@ function MachineItem({ faq }) {
   const [clicked, setClicked] = useState(false);
   const contentEl = useRef();
 
-  const {
-    question,
-    id,
-    text1,
-    text2,
-    text3,
-    head1,
-    head2,
-    list1,
-    list2,
-    list3,
-  } = faq;
+  const { question, id } = faq;
 
   const handleToggle = () => {
     setClicked((prev) => !prev);
@@ -38,23 +27,7 @@ function MachineItem({ faq }) {
       >
         <div className="">
           <div className="">
-            <div className="machine-text">
-              {" "}
-              <p>{text1}</p>
-              <p>{text2}</p>
-              <h3>{head1}</h3>
-              {list1 && (
-                <ul>
-                  <li>{list1}</li>
-                  <li>{list2}</li>
-                  <li>{list3}</li>
-                </ul>
-              )}
-              <h3>{head2}</h3>
-              <ul></ul>
-              <p>{text3}</p>
-              <ul></ul>
-            </div>
+            <div className="machine-text"></div>
           </div>
 
           <div className="room-questions">

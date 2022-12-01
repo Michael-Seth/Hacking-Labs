@@ -281,3 +281,93 @@ nav .button {
   outline: #1ebd88;
   width: 100%;
 }
+/* ========================
+          SETTINGS
+============================*/
+.editProfile {
+  font-size: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profileTop {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin: 2rem 0;
+}
+.profileTop .profileImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profileImg label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  background-color: #2759e5;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.profileImg img {
+  margin: 1.5rem 0;
+  width: 10rem;
+  border-radius: 50%;
+  padding: 0.4rem;
+  border: 0.3rem solid #ffed50;
+}
+.profileImgSave {
+  background-color: #1ebd88;
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: flex-end;
+  font-size: 1.6rem;
+}
+.profileData .profileRank {
+  display: flex;
+  justify-content: space-between;
+}
+.profileData .profileName {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-basis: 35%;
+}
+.profileData {
+  flex-basis: 60%;
+  align-self: stretch;
+  display: flex;
+  font-size: 1.3rem;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.profileData span {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #0cbc8a;
+}
+.profileBottom {
+  width: 80%;
+  margin: 4rem auto 1rem auto;
+  justify-content: space-evenly;
+}
+.profileDesc p {
+  margin-top: 1.5rem;
+  padding: 2rem 1rem;
+  border: 1px solid rgb(70, 93, 76);
+  border-radius: 0.6rem;
+  background-color: #0e1712;
+  font-size: 1.3rem;
+}
+.profileDesc h4 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.updateProfileSec {
+  width: 80%;
+  margin: 4rem auto 1rem auto;
+}

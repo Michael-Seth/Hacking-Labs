@@ -6,7 +6,7 @@ function Lab({ room }) {
     <div className="labsGrid-box">
       <h3 className="labsGrid-name">{room.name}</h3>
       <h5 className="labsGrid-category">{room.category}</h5>
-      <Link to={`/dashboard/labs/${room.id}`} className="start">
+      <Link to={`/dashboard/labs/${room.name}`} className="start">
         Start Machine &nbsp;▷
       </Link>
 

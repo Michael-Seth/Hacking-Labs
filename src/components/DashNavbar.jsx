@@ -1,6 +1,7 @@
 import React from "react";
 import user from "../assets/img/image.me.jpg";
 import logo from "../assets/img/cysecnewlogo.png";
+import { NavLink } from "react-router-dom";
 
 function DashNavbar({ handleTab }) {
   return (
@@ -9,9 +10,14 @@ function DashNavbar({ handleTab }) {
         <div className="logo">
           <img src={logo} alt="logo" />
         </div>
-        <button className="vpn" onClick={() => handleTab("tab4")}>
-          Download VPN
-        </button>
+        <NavLink
+          to="/dashboard/downloadvpn"
+          end
+          onClick={() => handleTab("tab4")}
+        >
+          <button className="vpn">Download VPN</button>
+        </NavLink>
+
         <div className="search">
           <svg
             width="19"

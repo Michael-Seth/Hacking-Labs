@@ -110,7 +110,7 @@ function CreateLab() {
   return (
     <div className="box create-labs">
       <h5>Create Lab</h5>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} className="adminForm">
         <div className="form1">
           <div className="form-box">
             <label htmlFor="name">Name</label>

@@ -1,73 +1,127 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
+import GlobalContext from "../context/GlobalContext";
+//import parse from "html-react-parser";
+//import Machine from "../../src/components/Machine";
 
 function CreateMaterials() {
+  const { addMachine, machineData, machineEdit, updateMachine } =
+    useContext(GlobalContext);
+  const [contain, setContain] = useState("");
+  const [taskData, setTaskData] = useState(machineData);
+
+  //====================================================
+  //====================================================
+
+  useEffect(() => {
+    if (machineEdit.edit === true) {
+      setTaskData({
+        name: machineEdit.machine.name,
+        tag: machineEdit.machine.tag,
+        desc: machineEdit.machine.desc,
+        category: machineEdit.machine.category,
+        team: machineEdit.machine.team,
+        image: machineEdit.machine.image,
+      });
+    }
+  }, [machineEdit]);
+
+  const { title, task, ans } = taskData;
+
+  const handleChange = (e) => {
+    setTaskData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const answer = ans?.toLowerCase();
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const taskDataCopy = {
+      ...taskData,
+      answer,
+      contain,
+    };
+    delete taskDataCopy.answer;
+    addMachine(taskDataCopy);
+    toast.success("Machine Added Successfully");
+
+    // To Edit the Machine
+    if (machineEdit.edit === true) {
+      updateMachine(machineEdit.machine.id, taskDataCopy);
+    }
+    //=====================
+    setTaskData({
+      title: "",
+      task: "",
+      ans: "",
+    });
+    setContain("");
+    console.log(taskDataCopy);
+  };
+
   return (
     <div className="box create-labs">
-      <h5>Create Lab</h5>
-      <form>
-        <div className="form1">
-          <div className="form-box">
-            <label htmlFor="name">Name</label>
-            <input type="text" id="name" placeholder="Enter Lab Name" />
-          </div>
-          <div className="form-box">
-            <label htmlFor="tag">
-              Tags <span>minimum of 5 tags</span>
-            </label>
+      <h5>Create Material</h5>
+      <form onSubmit={onSubmit}>
+        <div className="mat1">
+          <div className="mat-box">
+            <label htmlFor="name">Title</label>
             <input
               type="text"
-              id="tag"
-              placeholder="Separate Tags With Commas"
+              id="title"
+              onChange={handleChange}
+              value={title || ""}
+              required
+              placeholder="Enter Lab Name"
             />
           </div>
-          <div className="form-box">
-            <label htmlFor="desc">Description</label>
-            <textarea
-              id="desc"
-              placeholder="Enter description of lab"
-            ></textarea>
+          <div className="mat-box" style={{ color: "#000 !important" }}>
+            <label htmlFor="desc">Content</label>
+            <ReactQuill
+              theme="snow"
+              value={contain || ""}
+              onChange={setContain}
+              required
+            />
+          </div>
+          &nbsp;
+          <div className="mat-box">
+            <label htmlFor="task">Task</label>
+            <input
+              type="text"
+              id="task"
+              value={task || ""}
+              required
+              onChange={handleChange}
+              placeholder="Enter a task "
+            />
+          </div>
+          <div className="mat-box">
+            <label htmlFor="answer">Answer</label>
+            <input
+              type="text"
+              id="ans"
+              value={ans || ""}
+              required
+              onChange={handleChange}
+              placeholder="Write answer"
+            />
           </div>
         </div>
-
-        <div className="form2">
-          <div className="form-box">
-            <label htmlFor="category">Choose category</label>
-            <input type="text" id="category" placeholder="Choose category" />
-          </div>
-          <div className="form-box">
-            <label htmlFor="team">Select Team</label>
-            <input type="text" id="team" placeholder="Select Team" />
-          </div>
-          {/* <div className="form-box">
-            <label htmlFor="image">
-              Thumbnail <span>minimum of 1 thumbnail</span>
-            </label>
-            <div className="form-box-upload">
-              <div className="upload">
-                <RiUploadCloudFill size="60px" color="#15c3ab9c" />
-                <br />
-                <p>Drag & Drop Your Files Here</p>
-                <input
-                  type="file"
-                  onChange={changeHandler}
-                  name="image"
-                  accept="image/x-png,image/jpeg"
-                />
-              </div>
-              <div
-                className="preview"
-                style={{ backgroundImage: `url(${fileDataURL})` }}
-              >
-                &nbsp;
-              </div>
-            </div>
-          </div> */}
-        </div>
-
         <button type="submit" className="create">
           Create
         </button>
       </form>
+      {/* <div className="display-labs">
+        <Machine />
+
+        <div>{parse(`${contain}`)}</div>
+      </div> */}
     </div>
   );
 }

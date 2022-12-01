@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import dashboardImg from "../assets/img/newdashboardcrop.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -11,8 +11,11 @@ import { toast } from "react-toastify";
 import logo from "../assets/img/cysecnewlogo.png";
 import { auth } from "./Firebase";
 import "./auth.css";
+import GlobalContext from "../context/GlobalContext";
 
 function Login() {
+  const { adminUser } = useContext(GlobalContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -57,6 +60,11 @@ function Login() {
         toast.error(error.message);
       });
   };
+
+  if (adminUser) {
+    return <Navigate to="/dashboard/home" />;
+  }
+
   return (
     <>
       <div className="container">

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import userImg from "../assets/img/image.me.jpg";
 import { ImUpload3 } from "react-icons/im";
 //import { MdLibraryAdd } from "react-icons/md";
 import { HiFolderAdd } from "react-icons/hi";
 import logout from "../assets/img/heroicons-outline_logout.svg";
 import { NavLink } from "react-router-dom";
+import GlobalContext from "../context/GlobalContext";
 
-function Sidebar({ activeTab, handleTab }) {
+function Sidebar({ handleTab }) {
+  const { adminUser, logOut } = useContext(GlobalContext);
+
   return (
     <>
       <div className="flex-one" id="dashboardMenu">
@@ -42,7 +45,7 @@ function Sidebar({ activeTab, handleTab }) {
 
             <NavLink
               end
-              to="/dashboard"
+              to="/dashboard/home"
               className={({ isActive }) =>
                 isActive ? "sidemenu-item active" : "sidemenu-item"
               }
@@ -60,7 +63,7 @@ function Sidebar({ activeTab, handleTab }) {
             </NavLink>
             <NavLink
               end
-              to="/dashboard/leadersboard"
+              to="/dashboard/leaderboard"
               className={({ isActive }) =>
                 isActive ? "sidemenu-item active" : "sidemenu-item"
               }
@@ -97,30 +100,39 @@ function Sidebar({ activeTab, handleTab }) {
             </NavLink>
           </div>
           <div className="divider">&nbsp;</div>
-          <NavLink
-            end
-            to="/dashboard/admin/create-lab"
-            className={({ isActive }) =>
-              isActive ? "sidemenu-item active" : "sidemenu-item"
-            }
-            onClick={() => handleTab("tab6")}
-          >
-            <HiFolderAdd style={{ color: "#0cbc8a", fontSize: "23px" }} />
-            <h5>Create Labs</h5>
-          </NavLink>
-          <NavLink
-            end
-            to="/dashboard/admin/create-material"
-            className={({ isActive }) =>
-              isActive ? "sidemenu-item active" : "sidemenu-item"
-            }
-            onClick={() => handleTab("tab7")}
-          >
-            <ImUpload3 style={{ color: "#0cbc8a", fontSize: "20px" }} />
-            <h5>Create Materials</h5>
-          </NavLink>
+          {adminUser && (
+            <>
+              <NavLink
+                end
+                to="/dashboard/createlab"
+                className={({ isActive }) =>
+                  isActive ? "sidemenu-item active" : "sidemenu-item"
+                }
+                onClick={() => handleTab("tab6")}
+              >
+                <HiFolderAdd style={{ color: "#0cbc8a", fontSize: "23px" }} />
+                <h5>Create Labs</h5>
+              </NavLink>
+              <NavLink
+                end
+                to="/dashboard/creatematerials"
+                className={({ isActive }) =>
+                  isActive ? "sidemenu-item active" : "sidemenu-item"
+                }
+                onClick={() => handleTab("tab7")}
+              >
+                <ImUpload3 style={{ color: "#0cbc8a", fontSize: "20px" }} />
+                <h5>Create Materials</h5>
+              </NavLink>
+            </>
+          )}
 
-          <NavLink end className="settings" onClick={() => handleTab("tab5")}>
+          <NavLink
+            to="/dashboard/settings"
+            end
+            className="settings"
+            onClick={() => handleTab("tab5")}
+          >
             <svg
               width="20"
               height="22"
@@ -142,7 +154,7 @@ function Sidebar({ activeTab, handleTab }) {
             <h5>Settings</h5>
           </NavLink>
 
-          <button className="logout">
+          <button onClick={logOut} className="logout">
             <img src={logout} alt="Logout" />
             <p>Logout</p>
           </button>
