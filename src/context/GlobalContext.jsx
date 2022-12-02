@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 // Create Context
 const GlobalContext = createContext();

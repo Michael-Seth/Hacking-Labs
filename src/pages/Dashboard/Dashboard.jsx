@@ -3,7 +3,7 @@ import "./dashboard.css";
 import Sidebar from "../../components/Sidebar";
 import DashNavbar from "../../components/DashNavbar";
 import { Outlet } from "react-router-dom";
-import DashboardHome from "../../components/DashboardHome";
+//import DashboardHome from "../../components/DashboardHome";
 //import { Route, Routes } from "react-router-dom";
 
 function Dashboard() {
