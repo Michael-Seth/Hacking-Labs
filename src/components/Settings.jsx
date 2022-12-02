@@ -4,7 +4,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
 
 function Settings() {
-  const [toggleUpdate, setToggleUpdate] = useState("openUpdate");
+  const [toggleUpdate, setToggleUpdate] = useState(false);
   const handleUpdate = () => {
     setToggleUpdate((current) => !current);
   };
