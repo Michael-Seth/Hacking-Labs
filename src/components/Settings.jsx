@@ -33,18 +33,22 @@ function Settings() {
       <div className="">
         <div className="profileTop">
           <div className="profileImg">
-            <label htmlFor="">
-              <FaCloudUploadAlt size="15px" />
-              &nbsp;&nbsp; Upload Image
-            </label>
+            {toggleUpdate && (
+              <label htmlFor="">
+                <FaCloudUploadAlt size="15px" />
+                &nbsp;&nbsp; Upload Image
+              </label>
+            )}
             <img
               src="https://pbs.twimg.com/profile_images/1486097486787792899/qXpycKIe_400x400.jpg"
               alt=""
             />
-            <div className="profileImgSave">
-              <h5>Save</h5>&nbsp;
-              <CgCheck size="20px" />
-            </div>
+            {toggleUpdate && (
+              <div className="profileImgSave">
+                <h5>Save</h5>&nbsp;
+                <CgCheck size="20px" />
+              </div>
+            )}
           </div>
           <div className="profileData">
             <div className="profileName">
