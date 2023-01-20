@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./dashboard.css";
 import Sidebar from "../../components/Sidebar";
 import DashNavbar from "../../components/DashNavbar";
 import { Outlet } from "react-router-dom";
-//import DashboardHome from "../../components/DashboardHome";
-//import { Route, Routes } from "react-router-dom";
+import GlobalContext from "../../context/GlobalContext";
+
+/** */
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("tab1");
+   const { user, checkUser, checkAdmin } = useContext(GlobalContext);
+
+  useEffect(() => {
+    checkUser();
+    checkAdmin()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
 
   //  Functions to handle Tab Switching
   const handleTab = (event) => {
@@ -15,20 +24,20 @@ function Dashboard() {
     setActiveTab(event);
   };
 
-  return (
-    <>
-      <DashNavbar handleTab={handleTab} />
-      <main>
-        <div className="grid">
-          <Sidebar activeTab={activeTab} handleTab={handleTab} />
-          {/* <div className="flex-two">{screen}</div> */}
-          <div className="flex-two">
-            <Outlet />
+  if (user)
+    return (
+      <>
+        <DashNavbar handleTab={handleTab} />
+        <main>
+          <div className="grid">
+            <Sidebar activeTab={activeTab} handleTab={handleTab} />
+            <div className="flex-two">
+              <Outlet />
+            </div>
           </div>
-        </div>
-      </main>
-    </>
-  );
+        </main>
+      </>
+    );
 }
 
 export default Dashboard;

@@ -8,6 +8,8 @@ import Spinner from "../shared/Spinner";
 function Labs() {
   const { labsData, isLoading } = useContext(GlobalContext);
 
+  console.log(labsData);
+  
   if (!isLoading && (!labsData || labsData.length === 0)) {
     return <h3> No Labs Available</h3>;
   }

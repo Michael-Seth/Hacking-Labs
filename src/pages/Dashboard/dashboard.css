@@ -6,6 +6,7 @@ header {
 
 .logo {
   flex-basis: 20%;
+  cursor: pointer;
 }
 .header .logo img {
   width: 60px;
@@ -147,6 +148,7 @@ nav .button {
   align-items: center;
   margin-bottom: 2.5rem;
   padding: 2rem;
+  padding-right: 8rem;
 }
 .main {
   flex-basis: 100%;
@@ -399,6 +401,40 @@ nav .button {
 /* ======================================
               DASHBOARD
 =========================================*/
+.dashboard-head .sm-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dashboard-head .sm-head span {
+  background-color: #1e5ebd;
+  padding: 3px 7px;
+  letter-spacing: 1px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 3px;
+}
+@media only screen and (max-width: 480px) {
+  .dashboard-head {
+    margin-bottom: 2rem;
+  }
+  .dashboard-head h5 {
+    margin: 1rem 0;
+  }
+
+  .head .dashboard-head h3 {
+    margin: 0;
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+  }
+}
 
 .dashboard-head h5 {
   font-size: 1.6rem;

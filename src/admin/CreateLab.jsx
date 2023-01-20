@@ -1,89 +1,101 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { RiUploadCloudFill } from "react-icons/ri";
+import { fill } from "@cloudinary/url-gen/actions/resize";
+import { CloudinaryImage } from "@cloudinary/url-gen";
 import GlobalContext from "../context/GlobalContext";
 import "./Admin.css";
 import Preview from "./Preview";
+import { useNavigate } from "react-router-dom";
 
 function CreateLab() {
+  const navigate = useNavigate();
   // const imageMimeType = /image\/(png|jpg|jpeg)/i;
-  const { addLab, labsData, labEdit, updateLab } = useContext(GlobalContext);
-
-  const [formData, setFormData] = useState(labsData);
+  const { addLab, labEdit, updateLab, labsData } = useContext(GlobalContext);
+  // const [formData, setFormData] = useState(labsData);
   const [file, setFile] = useState(null);
-  const [fileDataURL, setFileDataURL] = useState(null);
+  const [labImage, setLabImage] = useState(null);
 
-  const { name, tag, desc, category, team } = formData;
+  const nameRef = useRef("");
+  const descriptionRef = useRef("");
+  const tagsRef = useRef("");
+  const pathRef = useRef("");
+  const categoryRef = useRef("");
+  const labImageRef = useRef(null);
+
+  const myImage = new CloudinaryImage("sample", {
+    cloudName: "dpvl31dut",
+  }).resize(fill().width(100).height(150));
 
   //For Categories
   const categories = [
-    { id: 1, name: "Web" },
-    { id: 2, name: "Linux" },
+    { id: 1, name: "web" },
+    { id: 2, name: "linux" },
+    { id: 3, name: "forensics" },
+    { id: 4, name: "windows" },
+    { id: 5, name: "cryptography" },
+    { id: 6, name: "osint" },
   ];
 
   const teams = [
-    { id: 1, name: "Red Team" },
-    { id: 2, name: "Blue Team" },
+    { id: 1, name: "redteam" },
+    { id: 2, name: "blueteam" },
   ];
 
   //This part help trigger the button to update it, the labEdit
   useEffect(() => {
     if (labEdit.edit === true) {
-      setFormData({
-        name: labEdit.room.name,
-        tag: labEdit.room.tag,
-        desc: labEdit.room.desc,
-        category: labEdit.room.category,
-        team: labEdit.room.team,
-        image: labEdit.room.image,
-      });
+      //window.location.reload();
+      nameRef.current.value = labEdit.lab.name;
+      [tagsRef.current.value] = labEdit.lab.tags;
+      descriptionRef.current.value = labEdit.lab.description;
+      categoryRef.current.value = labEdit.lab.category;
+      pathRef.current.value = labEdit.lab.path;
     }
   }, [labEdit]);
 
-  const onChange = (e) => {
-    //   For Image Review
-    //For files
-    if (e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        image: e.target.files[0],
-      }));
-      setFile(e.target.files[0]);
-    }
-    //For text/boolean/numbers
-    if (!e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        [e.target.id]: e.target.value,
-      }));
-    }
-  };
+  // const onChange = (e) => {
+  //   //   For Image Review
+  //   //For files
+  //   if (e.target.files) {
+  //     setFormData((prevState) => ({
+  //       ...prevState,
+  //       image: e.target.files[0],
+  //     }));
+  //     setFile(e.target.files[0]);
+  //   }
+  //   //For text/boolean/numbers
+  //   if (!e.target.files) {
+  //     setFormData((prevState) => ({
+  //       ...prevState,
+  //       [e.target.id]: e.target.value,
+  //     }));
+  //   }
+  // };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const labsDataCopy = {
-      name,
-      tag,
-      desc,
-      category,
-      team,
-      fileDataURL,
+
+    const data = {
+      name: nameRef.current.value,
+      description: descriptionRef.current.value,
+      tags: [tagsRef.current.value],
+      path: pathRef.current.value,
+      category: categoryRef.current.value,
+      labImage: labImageRef.current.value,
     };
-    delete labsDataCopy.image;
-    addLab(labsDataCopy);
-    console.log(labsDataCopy);
-    //Check if the labEdit function is triggered, if yes, update the id of the document
     if (labEdit.edit === true) {
-      updateLab(labEdit.room.id, labsDataCopy);
+      updateLab(labEdit.lab.id, data);
+      labEdit.edit = false;
+    } else {
+      addLab(data);
     }
-    setFormData({
-      name: "",
-      tag: "",
-      desc: "",
-      category: "",
-      team: "",
-      image: {},
-    });
-    setFileDataURL(null);
+    // delete labsDataCopy.image;
+    console.log(labsData);
+    window.location.reload();
+    //console.log(data);
+    //Check if the labEdit function is triggered, if yes, update the id of the document
+
+    setLabImage(null);
   };
 
   useEffect(() => {
@@ -94,7 +106,7 @@ function CreateLab() {
       fileReader.onload = (e) => {
         const { result } = e.target;
         if (result && !isCancel) {
-          setFileDataURL(result);
+          setLabImage(result);
         }
       };
       fileReader.readAsDataURL(file);
@@ -117,8 +129,7 @@ function CreateLab() {
             <input
               type="text"
               id="name"
-              value={name || ""}
-              onChange={onChange}
+              ref={nameRef}
               placeholder="Enter Lab Name"
               required
             />
@@ -129,19 +140,17 @@ function CreateLab() {
             </label>
             <input
               type="text"
-              value={tag || ""}
-              id="tag"
+              ref={tagsRef}
+              id="tags"
               required
-              onChange={onChange}
               placeholder="Separate Tags With Commas"
             />
           </div>
           <div className="form-box">
-            <label htmlFor="desc">Description</label>
+            <label htmlFor="description">Description</label>
             <textarea
-              id="desc"
-              onChange={onChange}
-              value={desc || ""}
+              id="description"
+              ref={descriptionRef}
               placeholder="Enter description of lab"
             ></textarea>
           </div>
@@ -153,8 +162,7 @@ function CreateLab() {
             <select
               id="category"
               name="category"
-              onChange={onChange}
-              value={category || ""}
+              ref={categoryRef}
               form="category"
               required
             >
@@ -169,15 +177,8 @@ function CreateLab() {
             </select>{" "}
           </div>
           <div className="form-box">
-            <label htmlFor="team">Select Team</label>
-            <select
-              id="team"
-              name="team"
-              onChange={onChange}
-              value={team || ""}
-              form="team"
-              required
-            >
+            <label htmlFor="path">Select Team</label>
+            <select id="path" name="path" ref={pathRef} form="team" required>
               <option>-- TEAM --</option>
               {teams.map((team) => {
                 return (
@@ -202,16 +203,16 @@ function CreateLab() {
                 <p>Drag & Drop Your Files Here</p>
                 <input
                   type="file"
-                  onChange={onChange}
+                  ref={labImageRef}
                   name="image"
                   id="image"
                   accept="image/x-png,image/jpeg"
                 />
               </div>
-              {fileDataURL ? (
+              {labImage ? (
                 <div
                   className="preview"
-                  style={{ backgroundImage: `url(${fileDataURL})` }}
+                  style={{ backgroundImage: `url(${labImage})` }}
                 >
                   &nbsp;
                 </div>
@@ -227,9 +228,15 @@ function CreateLab() {
           </div>
         </div>
 
-        <button type="submit" className="create">
-          Create
-        </button>
+        {labEdit.edit ? (
+          <button type="submit" className="create">
+            Update
+          </button>
+        ) : (
+          <button type="submit" className="create">
+            Create
+          </button>
+        )}
       </form>
 
       <div className="display-labs">

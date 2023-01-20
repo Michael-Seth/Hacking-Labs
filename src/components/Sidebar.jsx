@@ -4,11 +4,24 @@ import { ImUpload3 } from "react-icons/im";
 //import { MdLibraryAdd } from "react-icons/md";
 import { HiFolderAdd } from "react-icons/hi";
 import logout from "../assets/img/heroicons-outline_logout.svg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import GlobalContext from "../context/GlobalContext";
+import axios from "axios";
 
 function Sidebar({ handleTab }) {
-  const { adminUser, logOut } = useContext(GlobalContext);
+  const { adminUser } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  const logoutUser = async () => {
+    try {
+      const resp = await axios.get("/users/logout");
+      console.log(resp);
+      if (resp.status === 200) {
+        sessionStorage.clear();
+        navigate("/login");
+      }
+    } catch (error) {}
+  };
 
   return (
     <>
@@ -86,7 +99,7 @@ function Sidebar({ handleTab }) {
               className={({ isActive }) =>
                 isActive ? "sidemenu-item active" : "sidemenu-item"
               }
-              onClick={() => handleTab("tab3")}
+              // onClick={() => handleTab("")}
             >
               <svg
                 width="22"
@@ -154,7 +167,7 @@ function Sidebar({ handleTab }) {
             <h5>Settings</h5>
           </NavLink>
 
-          <button onClick={logOut} className="logout">
+          <button onClick={logoutUser} className="logout">
             <img src={logout} alt="Logout" />
             <p>Logout</p>
           </button>

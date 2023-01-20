@@ -1,69 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import dashboardImg from "../assets/img/newdashboardcrop.png";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth";
-import { toast } from "react-toastify";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/cysecnewlogo.png";
-import { auth } from "./Firebase";
 import "./auth.css";
 import GlobalContext from "../context/GlobalContext";
+import { Rolling } from "../components/Spinner";
 
 function Login() {
-  const { adminUser } = useContext(GlobalContext);
-
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const { email, password } = formData;
+  const usernameRef = useRef("");
+  const passRef = useRef("");
   const navigate = useNavigate();
-  const onChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      [e.target.id]: e.target.value,
-    }));
-  };
+  const { isLoading, loginUser, checkUser, user } = useContext(GlobalContext);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      if (userCredential.user) {
-        navigate("/dashboard");
-      }
-    } catch (error) {
-      toast.error("Wrong User Credentials");
+  useEffect(() => {
+    checkUser();
+    if (user) {
+      navigate("/dashboard/home");
     }
-  };
+  }, [navigate, checkUser, user]);
 
-  // Login with Google
-  const provider = new GoogleAuthProvider();
-  const signInWithGoogle = () => {
-    const auth = getAuth();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // const user = result.user;
-        toast.success("Login Successfully");
-        navigate("/dashboard");
-      })
-      .catch((error) => {
-        toast.error(error.message);
-      });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+      username: usernameRef.current.value,
+      password: passRef.current.value,
+    };
+    loginUser(data);
   };
-
-  if (adminUser) {
-    return <Navigate to="/dashboard/home" />;
-  }
 
   return (
     <>
@@ -77,16 +40,14 @@ function Login() {
               Sign <span style={{ color: "#0cbc8b" }}>In</span>
             </h2>
             <div className="wrapper-box">
-              <form onSubmit={onSubmit}>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                  <label>Email</label>
+                  <label>Username</label>
                   <input
-                    placeholder="Enter your email address"
-                    type="email"
+                    placeholder="Enter your username"
+                    type="text"
                     required
-                    id="email"
-                    value={email}
-                    onChange={onChange}
+                    ref={usernameRef}
                   />
                 </div>
                 <div className="form-group">
@@ -95,24 +56,18 @@ function Login() {
                     placeholder="Enter your password"
                     required
                     type="password"
-                    id="password"
-                    value={password}
-                    onChange={onChange}
+                    ref={passRef}
                   />
                 </div>
                 <div className="agreement">
-                  <input type="checkbox" />
-                  <label>Remember me</label>
+                  <input type="checkbox" id="remember" />
+                  <label htmlFor="remember">Remember me</label>
                 </div>
-                <button className="btn btn-d">SIGN IN</button>
+                <button className="btn btn-e">
+                  {isLoading ? <Rolling /> : "SIGN IN"}
+                </button>
               </form>
-              <h5 style={{ textAlign: "center" }}>Or</h5>
-              <button
-                className="g-btn hvr-sweep-to-right"
-                onClick={signInWithGoogle}
-              >
-                SIGN IN WITH GOOGLE
-              </button>
+
               <div className="reset">
                 <p>
                   Forget password?{" "}

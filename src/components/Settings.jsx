@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { CgCheck } from "react-icons/cg";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { CiEdit } from "react-icons/ci";
+import GlobalContext from "../context/GlobalContext";
 
 function Settings() {
+  const { getUser } = useContext(GlobalContext);
+
   const [toggleUpdate, setToggleUpdate] = useState(false);
   const handleUpdate = () => {
     setToggleUpdate((current) => !current);
@@ -11,6 +14,11 @@ function Settings() {
   const onSubmit = (e) => {
     e.preventdefault();
   };
+
+  // const checkStatus = () => {
+  //   getUser();
+  // };
+  // checkStatus();
   return (
     <div className="box" style={{ overflowY: "scroll" }} id="vpn">
       <div className="editProfile">

@@ -299,6 +299,7 @@ footer .footer-home img {
   border-radius: 10px 0 0 10px;
   background-color: rgb(240, 240, 240);
   border: none;
+  color: #000806;
   height: 100%;
   display: inline;
   outline: none;
@@ -1631,6 +1632,7 @@ form .form-group label {
     align-content: center;
     text-align: center;
     height: 70px;
+    color: #000806;
   }
   .newsletter form input {
     padding: 10px;

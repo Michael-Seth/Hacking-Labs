@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import dashboardImg from "../assets/img/newdashboardcrop.png";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/cysecnewlogo.png";
-import "./auth.css";
+import "../Auth/auth.css";
 import { Rolling } from "../components/Spinner";
 import GlobalContext from "../context/GlobalContext";
 
-function Register() {
+function SuperAdmin() {
   const navigate = useNavigate();
   const emailRef = useRef("");
   const passRef = useRef("");
@@ -16,12 +16,12 @@ function Register() {
   const [resend, setResend] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { registerUser, checkUser } = useContext(GlobalContext);
+  const { registerAdminUser } = useContext(GlobalContext);
 
-  useEffect(() => {
-    checkUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+//   useEffect(() => {
+//     checkUser();
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ function Register() {
       email: emailRef.current.value,
       password: passRef.current.value,
     };
-    registerUser(data);
+    registerAdminUser(data);
   };
   return (
     <>
@@ -45,7 +45,7 @@ function Register() {
           </div>
           <div className="wrapper">
             <h2>
-              Create An <span style={{ color: "#0cbc8b" }}>Account</span>
+              Create A <span style={{ color: "#0cbc8b" }}>SuperAdmin</span>
             </h2>
             <div className="wrapper-box">
               <form onSubmit={handleSubmit}>
@@ -151,4 +151,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default SuperAdmin;

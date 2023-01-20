@@ -54,7 +54,7 @@
   height: 100%;
 }
 .container-item-a .wrapper .wrapper-box form > *:not(:last-child) {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .container-item-a .wrapper .wrapper-box form .agreement {
@@ -90,13 +90,16 @@
   color: #d1d1d148;
   font-weight: 300;
 }
-.container-item-a .wrapper .wrapper-box form .btn-d {
+.container-item-a .wrapper .wrapper-box form .btn-e {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0.3rem;
   display: block;
   background-color: #0cbc8b;
   width: 100%;
   padding: 14px 0;
+}
+.container-item-a .wrapper .wrapper-box form .btn-e:hover {
+  background-color: #0cbc8ab2;
 }
 
 .container-item-a .wrapper .wrapper-box .reset {

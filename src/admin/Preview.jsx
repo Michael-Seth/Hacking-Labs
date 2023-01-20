@@ -31,14 +31,20 @@ function Preview({ preview }) {
 
       <div className="prev-btns">
         <MdDeleteForever
-          onClick={() => deleteLab(preview.id)}
+          onClick={() => {
+            console.log(preview.id);  
+            deleteLab(preview.id)
+          }
+        }
           className="prev-btn"
           color="red"
           size="30px"
         />
         &nbsp;
         <FaRegEdit
-          onClick={() => editLab(preview)}
+          onClick={() =>{
+            editLab(preview)
+          } }
           className="prev-btn"
           color="yellow"
           size="30px"

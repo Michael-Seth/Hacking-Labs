@@ -1,7 +1,61 @@
 /* ================================ */
 /* Navbar */
 /* ================================ */
-
+.notification-box {
+  position: relative;
+}
+.notification_bar {
+  position: absolute;
+  width: 100%;
+  top: -1rem;
+  right: 1rem;
+  padding: 2rem;
+  z-index: 3000;
+  background-image: linear-gradient(
+    180deg,
+    rgba(85, 136, 202, 0.877),
+    rgba(57, 79, 126, 0.979)
+  );
+  text-align: center;
+  font-size: 1.35rem;
+  font-weight: 100;
+  letter-spacing: 0.3px;
+  border-radius: 0.8rem;
+}
+/* @media only screen and (min-width: 480px) {
+  .notification-bar {
+    margin-right: 2rem;
+    right: -5;
+    width: 30%;
+    padding: 1rem;
+  }
+  } */
+.notification_bar .notification-closebutton {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.6rem;
+  font-size: 1.3rem;
+  padding: 0.1rem 0.6rem;
+  line-height: 1.5;
+  border-radius: 0.5rem;
+  background-color: #16161698;
+  cursor: pointer;
+}
+@media only screen and (max-width: 480px) {
+  .notification_bar .notification-closebutton {
+    right: -1.7rem;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.7rem 1.5rem;
+    line-height: normal;
+    font-size: 1.8rem;
+  }
+}
+.notification_bar .notification-closebutton:hover {
+  background-color: rgba(211, 16, 16, 0.973);
+  color: #fff;
+  font-weight: 500;
+}
 .header {
   background-color: #000806;
   display: flex;
@@ -14,6 +68,7 @@
 
 .logo {
   flex-basis: 20%;
+  cursor: pointer;
 }
 .header .logo img {
   width: 60px;

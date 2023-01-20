@@ -110,7 +110,6 @@ p {
 
 .btn:hover {
   color: #222;
-  transition-delay: 0.5s;
 }
 
 .btn:hover:before {

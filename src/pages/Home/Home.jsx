@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 //import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import logo from "../../assets/img/cysecnewlogo.png";
@@ -14,10 +14,19 @@ import twitter from "../../assets/img/twitter.png";
 import instagram from "../../assets/img/instagram.png";
 import facebook from "../../assets/img/facebook.png";
 import linkedin from "../../assets/img/linkedin.png";
+import GlobalContext from "../../context/GlobalContext";
 import "./Home.css";
 
 function Home() {
   const videoEl = useRef(null);
+  const {newsletter, newletterMessage} = useContext(GlobalContext);
+  const newsletterRef = useRef("");
+
+  const handleNewsletter = (e) => {
+    e.preventDefault();
+    const data = newsletterRef.current.value
+    newsletter(data);
+  }; 
 
   const attemptPlay = () => {
     videoEl &&
@@ -227,10 +236,11 @@ function Home() {
             Subcribe to get the latest updates about our <br /> products &
             features
           </p>
-          <form action="">
-            <input type="email" placeholder="Email" name="email" />
+          <form onSubmit={handleNewsletter}>
+            <input type="email" placeholder="Email" ref={newsletterRef} />
             <button>JOIN</button>
           </form>
+          {newletterMessage && <div className="newletterMessage">{newletterMessage}</div>}
           <img src={img7} alt="" />
         </div>
       </main>
