@@ -13,7 +13,7 @@ function Login() {
   const { isLoading, loginUser, checkUser, user } = useContext(GlobalContext);
 
   useEffect(() => {
-    checkUser();
+    // checkUser();
     if (user) {
       navigate("/dashboard/home");
     }
