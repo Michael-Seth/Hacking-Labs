@@ -19,14 +19,14 @@ import "./Home.css";
 
 function Home() {
   const videoEl = useRef(null);
-  const {newsletter, newletterMessage} = useContext(GlobalContext);
+  const { newsletter, newletterMessage } = useContext(GlobalContext);
   const newsletterRef = useRef("");
 
   const handleNewsletter = (e) => {
     e.preventDefault();
-    const data = newsletterRef.current.value
+    const data = newsletterRef.current.value;
     newsletter(data);
-  }; 
+  };
 
   const attemptPlay = () => {
     videoEl &&
@@ -58,7 +58,7 @@ function Home() {
               <p>
                 Maintaining cybersecurity in a constantly evolving threat
                 landscape is a challenge for all organization. Train your teams
-                on cysec hacking labs
+                on this hacking labs
               </p>
               <button className="btn btn-a hvr-grow-shadow">Get Started</button>
               &nbsp;&nbsp;&nbsp;
@@ -130,9 +130,7 @@ function Home() {
             <div className="about-text">
               <p>
                 A platform for you to learn various areas of cyber security. Red
-                Team? Blue Team? Purple Team? We got you all covered. CYSEC
-                Hacking Labs is powered by CYSEC NG – Africa’s first and largest
-                cybersecurity conference and hackathon.
+                Team? Blue Team? Purple Team? We got you all covered.
               </p>
               <p>
                 With over 10,000 participants across Africa, the platform has
@@ -140,7 +138,7 @@ function Home() {
                 personnels. It’s good to belong. Especially when a community
                 shares the same objectives, is massively growing, welcomes
                 everybody, and is always ready to help by exchanging ideas and
-                spreading the hacking knowledge. That’s the Cysec Hacking Lab!
+                spreading the hacking knowledge. That’s the Hacking Lab!
               </p>
               <button className="btn btn-a hvr-grow-shadow">Learn More</button>
             </div>
@@ -240,7 +238,9 @@ function Home() {
             <input type="email" placeholder="Email" ref={newsletterRef} />
             <button>JOIN</button>
           </form>
-          {newletterMessage && <div className="newletterMessage">{newletterMessage}</div>}
+          {newletterMessage && (
+            <div className="newletterMessage">{newletterMessage}</div>
+          )}
           <img src={img7} alt="" />
         </div>
       </main>
@@ -254,22 +254,22 @@ function Home() {
           <hr />
           <div className="footer-social">
             <h3>Follow Us</h3>
-            <a href="https://facebook.com/cysecng">
+            <a href="https://facebook.com">
               <li>
                 <img src={facebook} alt="facebook" />{" "}
               </li>
             </a>
-            <a href="https://instagram.com/cysecng">
+            <a href="https://instagram.com">
               <li>
                 <img src={instagram} alt="instagram" />
               </li>
             </a>
-            <a href="https://twitter.com/cysecng">
+            <a href="https://twitter.com">
               <li>
                 <img src={twitter} alt="twitter" />
               </li>
             </a>
-            <a href="https://linkedin.com/cysecng">
+            <a href="https://linkedin.com">
               <li>
                 <img src={linkedin} alt="linkedin" />
               </li>
@@ -284,7 +284,7 @@ function Home() {
             <li>Leaderboard</li>
           </ul>
         </div>
-        <div className="contact">
+        {/* <div className="contact">
           <h4>Contact</h4>
           <ul>
             <li>+234 706 214 6978</li>
@@ -292,11 +292,11 @@ function Home() {
             <li>info@cybersecuritychallenge.com.ng </li>
             <li>info@cysec.ng</li>
           </ul>
-        </div>
+        </div> */}
       </footer>
 
       <div className="copyright">
-        <p>© Copyright CYSEC HACKING LAB | All Rights Reserved</p>
+        <p>© Copyright HACKING LAB | All Rights Reserved</p>
       </div>
     </>
   );

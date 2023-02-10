@@ -16,12 +16,11 @@ function Register() {
   const [resend, setResend] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { registerUser, checkUser } = useContext(GlobalContext);
+  const { registerUser, user } = useContext(GlobalContext);
 
-  useEffect(() => {
-    checkUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  if (user.length > 0) {
+    navigate("/dashboard/home");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
