@@ -9,14 +9,12 @@ import GlobalContext from "../../context/GlobalContext";
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState("tab1");
-   const { user, checkUser, checkAdmin } = useContext(GlobalContext);
+  const { user, checkUser } = useContext(GlobalContext);
 
   useEffect(() => {
     checkUser();
-    checkAdmin()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   //  Functions to handle Tab Switching
   const handleTab = (event) => {
@@ -24,20 +22,23 @@ function Dashboard() {
     setActiveTab(event);
   };
 
-  if (user)
-    return (
-      <>
-        <DashNavbar handleTab={handleTab} />
-        <main>
-          <div className="grid">
-            <Sidebar activeTab={activeTab} handleTab={handleTab} />
-            <div className="flex-two">
-              <Outlet />
+  return (
+    <>
+      {user.length > 0 && (
+        <div>
+          <DashNavbar handleTab={handleTab} />
+          <main>
+            <div className="grid">
+              <Sidebar activeTab={activeTab} handleTab={handleTab} />
+              <div className="flex-two">
+                <Outlet />
+              </div>
             </div>
-          </div>
-        </main>
-      </>
-    );
+          </main>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default Dashboard;

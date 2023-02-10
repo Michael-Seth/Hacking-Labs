@@ -1,15 +1,13 @@
 import React, { useContext, useRef } from "react";
 import dashboardImg from "../assets/img/newdashboardcrop.png";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import logo from "../assets/img/cysecnewlogo.png";
 import "./auth.css";
 import { Rolling } from "../components/Spinner";
-import axios from "axios";
 import GlobalContext from "../context/GlobalContext";
 
 function Verify() {
-  const { user, isLoading, resend, registerUser, verifyUser } =
+  const { isLoading, resend, registerUser, verifyUser } =
     useContext(GlobalContext);
   const navigate = useNavigate();
   const tokenRef = useRef("");

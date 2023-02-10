@@ -42,7 +42,7 @@ function CreateLab() {
   ];
 
   //This part help trigger the button to update it, the labEdit
-  useEffect(() => {
+
     if (labEdit.edit === true) {
       //window.location.reload();
       nameRef.current.value = labEdit.lab.name;
@@ -51,7 +51,7 @@ function CreateLab() {
       categoryRef.current.value = labEdit.lab.category;
       pathRef.current.value = labEdit.lab.path;
     }
-  }, [labEdit]);
+ 
 
   // const onChange = (e) => {
   //   //   For Image Review
@@ -98,26 +98,26 @@ function CreateLab() {
     setLabImage(null);
   };
 
-  useEffect(() => {
-    let fileReader,
-      isCancel = false;
-    if (file) {
-      fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        const { result } = e.target;
-        if (result && !isCancel) {
-          setLabImage(result);
-        }
-      };
-      fileReader.readAsDataURL(file);
-    }
-    return () => {
-      isCancel = true;
-      if (fileReader && fileReader.readyState === 1) {
-        fileReader.abort();
-      }
-    };
-  }, [file]);
+  // useEffect(() => {
+  //   let fileReader,
+  //     isCancel = false;
+  //   if (file) {
+  //     fileReader = new FileReader();
+  //     fileReader.onload = (e) => {
+  //       const { result } = e.target;
+  //       if (result && !isCancel) {
+  //         setLabImage(result);
+  //       }
+  //     };
+  //     fileReader.readAsDataURL(file);
+  //   }
+  //   return () => {
+  //     isCancel = true;
+  //     if (fileReader && fileReader.readyState === 1) {
+  //       fileReader.abort();
+  //     }
+  //   };
+  // }, [file]);
 
   return (
     <div className="box create-labs">

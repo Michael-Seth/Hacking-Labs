@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/cysecnewlogo.png";
+import GlobalContext from "../context/GlobalContext";
 import "./component.css";
 
 function Navbar() {
   const navigate = useNavigate();
+  const { checkUser } = useContext(GlobalContext);
 
   return (
     <header>
@@ -16,7 +18,7 @@ function Navbar() {
           <ul id="navMenu" className="navMenu">
             <li onClick={() => navigate("/")}>Home</li>
             <li onClick={() => navigate("/competition")}>Compete</li>
-            <button className="btn btn-a" onClick={() => navigate("/login")}>
+            <button className="btn btn-a" onClick={() => checkUser()}>
               Get Started
             </button>
           </ul>

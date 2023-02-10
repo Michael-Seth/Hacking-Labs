@@ -26,7 +26,7 @@ function CreateMaterials() {
         image: machineEdit.machine.image,
       });
     }
-  }, [machineEdit]);
+  }, []);
 
   const { title, task, ans } = taskData;
 

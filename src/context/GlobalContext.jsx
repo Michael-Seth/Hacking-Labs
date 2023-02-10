@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ const GlobalContext = createContext();
 
 // Provider Component
 export const GlobalProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [resend, setResend] = useState(false);
   const [labsData, setLabsData] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -33,6 +33,8 @@ export const GlobalProvider = ({ children }) => {
    * ================================================
    */
   const registerUser = async (userData) => {
+    setIsLoading(true);
+
     setResend(true);
     try {
       const resp = await axios.post("/users/register", {
@@ -41,12 +43,12 @@ export const GlobalProvider = ({ children }) => {
 
       //please dont do the below. only for testing purpose
       if (resp.status === 201) {
-        setIsLoading(false);
         setResend(false);
         toast.success("Please Check Your Email For Token");
         setTimeout(() => {
           navigate("/verify");
         }, 1500);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -55,6 +57,7 @@ export const GlobalProvider = ({ children }) => {
 
   const registerAdminUser = async (adminData) => {
     setResend(true);
+    setIsLoading(true);
     try {
       const resp = await axios.post("/manage/create-admin", {
         user: adminData,
@@ -62,12 +65,12 @@ export const GlobalProvider = ({ children }) => {
 
       //please dont do the below. only for testing purpose
       if (resp.status === 201) {
-        setIsLoading(false);
         setResend(false);
         toast.success("Please Check Your Email For Token");
         setTimeout(() => {
           navigate("/verify");
         }, 1500);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -75,16 +78,18 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const verifyUser = async (token) => {
+    setIsLoading(true);
     try {
       const resp = await axios.post("/users/verify", {
         verifyData: token,
       });
       if (resp.status === 200) {
-        setIsLoading(false);
+        
         toast.success("Registration Successful");
         setTimeout(() => {
           navigate("/dashboard/home");
         }, 1000);
+        setIsLoading(false);
       } else {
         setResend(true);
         toast.error("Please ensure you enter the correct Token");
@@ -95,16 +100,18 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const loginUser = async (userLogin) => {
+    setIsLoading(true);
     try {
       const resp = await axios.post("/users/login", { user: userLogin });
       console.log(resp);
       if (resp.status === 200) {
-        setIsLoading(false);
+        
         sessionStorage.setItem("token", JSON.stringify(resp.data));
         toast.success("Login Successful");
         setTimeout(() => {
           navigate("/dashboard/home");
         }, 1500);
+        setIsLoading(false);
       } else {
         setIsLoading(false);
         toast.error("Incorrect Username or Password");
@@ -134,40 +141,26 @@ export const GlobalProvider = ({ children }) => {
           authorization: JSON.parse(sessionStorage.getItem("token"))?.token,
         },
       });
-
+      console.log(resp);
       const result = resp.data;
-      setUser(result);
+
       //if user is not logged in no data will be here, so you can redirect them to anywhere.
       if (resp.status === 201) {
-        navigate();
-      } else {
-        //navigate("/login");
+        navigate("/dashboard/home");
+        fetchLabs();
+        fetchMachine();
+        setUser(result);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const checkAdmin = async () => {
-    try {
-      const resp = await axios.get("/users/user", {
-        headers: {
-          authorization: JSON.parse(sessionStorage.getItem("token"))?.token,
-        },
-      });
-      //console.log(resp);
       if (resp.data?.role === "admin") {
         setAdminUser(true);
         return;
-      } else {
-        setAdminUser(false);
       }
-
-      //if user is not logged in no data will be here, so you can redirect them to anywhere.
     } catch (error) {
+      navigate("/login");
       console.log(error);
     }
   };
+
   /**================================================
    *                      USEEFFECT CALLS END
    * ================================================
@@ -177,13 +170,13 @@ export const GlobalProvider = ({ children }) => {
    *               USEEFFECT CALLS START
    * ================================================
    */
-  useEffect(() => {
-    checkUser();
-    checkAdmin();
-    fetchLabs();
-    fetchMachine();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   checkUser();
+  //   checkAdmin();
+  //   fetchLabs();
+  //   fetchMachine();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   /**
    * =======================================================================================
@@ -204,14 +197,18 @@ export const GlobalProvider = ({ children }) => {
   };
 
   const fetchLabs = async () => {
+    setIsLoading(true);
+
     const resp = await axios.get("/users/getlabs", {
       headers: {
         authorization: JSON.parse(sessionStorage.getItem("token"))?.token,
       },
     });
     //console.log(resp);
-    setLabsData(resp.data);
-    setIsLoading(false);
+    if (resp.data){
+      setIsLoading(false);
+      setLabsData(resp.data);
+    }
   };
 
   //Delete Labs
@@ -398,9 +395,9 @@ export const GlobalProvider = ({ children }) => {
    * =======================================================================================
    * =======================================================================================
    */
-// ====================
-// SEARCH FUNCTION
-// ====================
+  // ====================
+  // SEARCH FUNCTION
+  // ====================
   const search = async (query) => {
     try {
       const resp = await axios.post(
@@ -431,9 +428,9 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-// ====================
-// Newsletter FUNCTION
-// ====================
+  // ====================
+  // Newsletter FUNCTION
+  // ====================
   const newsletter = async (email) => {
     try {
       const resp = await axios.post(
@@ -492,7 +489,6 @@ export const GlobalProvider = ({ children }) => {
         user,
         adminUser,
         checkUser,
-        checkAdmin,
         closeNotification,
         notification,
         searchResults,

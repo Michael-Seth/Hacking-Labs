@@ -8,7 +8,8 @@ function NotFound() {
     setTimeout(() => {
       navigate("/");
     }, 1500);
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return <div>NotFound</div>;
 }
 

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import dashboardImg from "../assets/img/newdashboardcrop.png";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/cysecnewlogo.png";
@@ -10,14 +10,13 @@ function Login() {
   const usernameRef = useRef("");
   const passRef = useRef("");
   const navigate = useNavigate();
-  const { isLoading, loginUser, checkUser, user } = useContext(GlobalContext);
+  const { isLoading, loginUser, user } = useContext(GlobalContext);
 
-  useEffect(() => {
-    // checkUser();
-    if (user) {
+
+    if (user.length > 0) {
       navigate("/dashboard/home");
     }
-  }, [navigate, checkUser, user]);
+ 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
