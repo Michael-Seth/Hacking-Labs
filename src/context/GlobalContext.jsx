@@ -129,7 +129,7 @@ export const GlobalProvider = ({ children }) => {
       const resp = await axios.get("/users/logout");
       if (resp.status === 200) {
         sessionStorage.clear();
-        navigate("/register");
+        navigate("/login");
       }
     } catch (error) {}
   };

@@ -22,6 +22,8 @@ function Home() {
   const { newsletter, newletterMessage } = useContext(GlobalContext);
   const newsletterRef = useRef("");
 
+  const { checkUser } = useContext(GlobalContext);
+
   const handleNewsletter = (e) => {
     e.preventDefault();
     const data = newsletterRef.current.value;
@@ -60,7 +62,7 @@ function Home() {
                 landscape is a challenge for all organization. Train your teams
                 on this hacking labs
               </p>
-              <button className="btn btn-a hvr-grow-shadow">Get Started</button>
+              <button className="btn btn-a hvr-grow-shadow" onClick={() => checkUser()}>Get Started</button>
               &nbsp;&nbsp;&nbsp;
               <button className="btn hvr-sweep-to-right">Learn More</button>
             </div>
